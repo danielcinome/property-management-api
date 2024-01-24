@@ -7,12 +7,15 @@ from app.db.postgres.engine import PostgresqlManager
 from app.api.property.schemas import PropertyModel
 from .managers import save_properties_data_in_db
 from app.api.avm.schemas import AVMDataBase
+from app.api.login.managers import get_current_active_user
 
 router = APIRouter()
 avm_adapter = AvmApiAdapter()
 
 
-@router.post("/avm-data", response_model=List[PropertyModel])
+@router.post("/avm-data",
+             dependencies=[Depends(get_current_active_user, use_cache=False)],
+             response_model=List[PropertyModel])
 async def receive_avm_data(avm_properties_data: List[AVMDataBase], db: Session = Depends(PostgresqlManager.get_db)):
     try:
         return await save_properties_data_in_db(avm_properties_data, db)

@@ -1,10 +1,7 @@
-import pytest
 import random
 
-
-@pytest.fixture
-def test_create_avm(client):
-    response = client.post('/avm-data', json=[
+def test_create_avm(client_with_auth):
+    response = client_with_auth.post('/avm-data', json=[
         {
             "address": "Address " + str(random.randint(1, 100)),
             "latitude": random.uniform(-90, 90),
@@ -66,8 +63,8 @@ def test_create_avm(client):
     assert response.status_code == 200
 
 
-def test_create_avm_error_field_required(client):
-    response = client.post('/avm-data', json=[
+def test_create_avm_error_field_required(client_with_auth):
+    response = client_with_auth.post('/avm-data', json=[
         {
             "latitude": 41.410610,
             "longitude": 2.161880,
