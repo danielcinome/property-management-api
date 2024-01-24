@@ -1,6 +1,5 @@
-import pytest
 
-@pytest.mark.usefixtures("test_create_user")
+
 def test_login(client):
     response = client.post('/login/access-token', data={
         'username': 'test_user',

@@ -6,8 +6,6 @@ import os
 from app.db.testing.engine import TestingManager
 from app.db.postgres.engine import PostgresqlManager
 from app.api.core.env_manager import EnvManager
-from .routers.test_routers_user import test_create_user
-from .routers.test_routers_avm import test_create_avm
 
 
 

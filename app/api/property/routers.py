@@ -7,11 +7,13 @@ from sqlalchemy.orm import Session
 from app.db.postgres.engine import PostgresqlManager
 from app.api.property.managers import property_stats
 from .enums import AreaType
+from app.api.login.managers import get_current_active_user
 
 router = APIRouter()
 
 
-@router.get("/average-price/{area_type}/{area_value}")
+@router.get("/average-price/{area_type}/{area_value}",
+            dependencies=[Depends(get_current_active_user, use_cache=False)])
 async def get_average_price_per_square_meter(area_type: AreaType, area_value: str, db: Session = Depends(PostgresqlManager.get_db)):
     """
     Obtain the average price per square meter for a specific city or area.

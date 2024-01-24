@@ -1,7 +1,5 @@
 
-import pytest
 
-@pytest.fixture
 def test_create_user(client):
     response = client.post('/user/create', json={
         'username': 'test_user',
